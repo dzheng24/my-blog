@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddCommentForm = () => {
+const AddCommentForm = ({ articleName, setArticleInfo }) => {
   const [username, setUsername] = useState('');
   const [commentText, setCommentText] = useState('');
 
@@ -12,6 +12,10 @@ const AddCommentForm = () => {
         'Content-Type': 'application/json',
       }
     })
+    const body = await result.json();
+    setArticleInfo(body);
+    setUsername('');
+    setCommentText('');
   }
 
   return (
@@ -25,7 +29,7 @@ const AddCommentForm = () => {
         Comment:
         <textarea rows="4" cols="50" value={commentText} onChange={e => setCommentText(e.target.value)}/>
       </label>
-      <button>Add Comment</button>
+      <button onClick={() => addComment()}>Add Comment</button>
     </div>
   );
 }
